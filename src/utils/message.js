@@ -6,8 +6,9 @@ const generateMessage = (username,text)=>{
     }
 }
 
-const generateLocationMessage = (text) => {
+const generateLocationMessage = (username, text) => {
     return {
+        username,
         text,
         CreateAt : new Date().getTime()
     }

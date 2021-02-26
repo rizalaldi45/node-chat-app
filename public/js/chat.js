@@ -11,7 +11,8 @@ const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 //Template Location
 const getLocation = document.querySelector('#location-template').innerHTML
 //Qs (Query String)
-const {username, room} = Qs.parse(location.search, {ignoreQueryPrefix : true})
+const {link, username, room} = Qs.parse(location.search, {ignoreQueryPrefix : true})
+console.log(username,link)
 
 const autoScroll = ()=>{
     const newMessage = messages.lastElementChild
@@ -28,7 +29,7 @@ const autoScroll = ()=>{
         messages.scrollTop = messages.scrollHeight
     }
     
-    console.log(newMessageMargin)
+    // console.log(newMessageMargin)
 }
 
 
@@ -45,6 +46,7 @@ socket.on('messageUpdate', (message)=>{
 socket.on('locationShared', url=>{
 
     const htmlLoc = Mustache.render(getLocation, {
+        username: url.username,
         url : url.text,
         CreateAt : moment(url.CreateAt).format('h:mm a')
     })

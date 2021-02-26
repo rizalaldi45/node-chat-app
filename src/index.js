@@ -62,7 +62,7 @@ io.on('connection', (socket)=>{
         const userData = getUser(socket.id)
         
         if (userData){
-            io.to(userData.room).emit('locationShared', generateLocationMessage(`https://google.com/maps?q=${location.latitude},${location.longitude}`))
+            io.to(userData.room).emit('locationShared', generateLocationMessage(userData.username,`https://google.com/maps?q=${location.latitude},${location.longitude}`))
             callback('')
         }
     })
@@ -70,5 +70,5 @@ io.on('connection', (socket)=>{
 
 
 server.listen(port, ()=>{
-    console.log(`Succesfull Running Server On Port ${port}`)
+    console.log(`Running Server On Port ${port}`)
 })
