@@ -1,55 +1,66 @@
 const users = []
 
-const addUser = ({ id, username, room }) => {
-    // Clean the data
+const addUser = ({id, username, room})=>{
+    //clean data
     username = username.trim().toLowerCase()
     room = room.trim().toLowerCase()
 
-    // Validate the data
-    if (!username || !room) {
+    //validate data
+    if (!username || !room){
         return {
-            error: 'Username and room are required!'
+            error : 'Username and Room is required !'
         }
     }
 
-    // Check for existing user
-    const existingUser = users.find((user) => {
+    // check existing user
+    const existing = users.find((user)=>{
         return user.room === room && user.username === username
     })
 
-    // Validate username
-    if (existingUser) {
+    // Validate Username
+    if (existing){
         return {
-            error: 'Username is in use!'
+            error : 'Username Is In Use !'
         }
     }
 
-    // Store user
-    const user = { id, username, room }
+    const user = {id, username, room}
     users.push(user)
     return { user }
 }
 
-const removeUser = (id) => {
-    const index = users.findIndex((user) => user.id === id)
-
-    if (index !== -1) {
-        return users.splice(index, 1)[0]
+const removeUser = (id)=>{
+    const index = users.findIndex((users)=> users.id === id)
+    if (index !== -1){
+        return users.splice(index, 1)
     }
 }
 
-const getUser = (id) => {
-    return users.find((user) => user.id === id)
+const getUser = (id)=>{
+    return users.find((users)=> users.id === id)
+
 }
 
-const getUsersInRoom = (room) => {
-    room = room.trim().toLowerCase()
-    return users.filter((user) => user.room === room)
+
+const getUserInRoom = (room)=>{
+    return users.filter((users)=> users.room === room)
 }
+
 
 module.exports = {
     addUser,
-    removeUser,
     getUser,
-    getUsersInRoom
+    removeUser,
+    getUserInRoom
 }
+
+// addUser({
+//     id : 22,
+//     username : 'Lola',
+//     room : 'jepara'
+// })
+
+
+
+// const dwin = getUser(22)
+// console.log(dwin)
