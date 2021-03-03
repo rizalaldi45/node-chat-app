@@ -26,8 +26,9 @@ io.on('connection', (socket)=>{
         }
 
         socket.join(user.room)
-        socket.emit('messageUpdate', generateMessage('Admin','Welcome'))
-        socket.broadcast.to(user.room).emit('messageUpdate', generateMessage('Admin',`${user.username} has joined !`))
+        socket.emit('messageUpdate', generateMessage('Admin','Welcome', 'https://www.bellacanvas.com/bella/images/color/Black.jpg'))
+        socket.broadcast.to(user.room).emit('messageUpdate', generateMessage('Admin',`${user.username} has joined !`,'https://www.bellacanvas.com/bella/images/color/Black.jpg'))
+
         io.to(user.room).emit('roomData', {
             room : user.room,
             users : getUserInRoom(user.room)
@@ -37,20 +38,19 @@ io.on('connection', (socket)=>{
 
     socket.on('sendMessage', (message, callback)=> {
         const user = getUser(socket.id)
-
         const filter = new Filter()
         if(filter.isProfane(message)){
             return callback('Profanity is not allowed !')
         }
 
-        io.to(user.room).emit('messageUpdate', generateMessage(user.username, message))
+        io.to(user.room).emit('messageUpdate', generateMessage(user.username, message, user.link))
         callback('')
     })
 
     socket.on('disconnect', ()=> {
         const userDataRemove = removeUser(socket.id)
         if (userDataRemove){
-            io.to(userDataRemove[0].room).emit('messageUpdate', generateMessage('Admin', `${userDataRemove[0].username} left the chat !`))
+            io.to(userDataRemove[0].room).emit('messageUpdate', generateMessage('Admin', `${userDataRemove[0].username} left the chat !`,'https://www.bellacanvas.com/bella/images/color/Black.jpg'))
             io.to(userDataRemove[0].room).emit('roomData', {
                 room : userDataRemove[0].room,
                 users : getUserInRoom(userDataRemove[0].room)
